@@ -23,6 +23,8 @@ public class ContactDAO extends DBHandler {
 
     private PreparedStatement pst;
     private ResultSet rs;
+        int rows;
+
 
     public ContactDAO() {
         new DBHandler();
@@ -97,19 +99,52 @@ public class ContactDAO extends DBHandler {
                 String uMail = rs.getString(2);
                 int uPhone = rs.getInt(3);
                 contactElement = new Contact(uName, uMail, uPhone);
-                System.out.println("contactElement"+ contactElement.getUserName());
+                System.out.println("contactElement" + contactElement.getUserName());
 //                contactObj.add(contactElement);
                 contactObj.add(contactElement);
                 contactObj2.addElement(contactElement);
 
-                System.out.println(" contactObj "+ contactObj);
-                System.out.println(" contactObj2 "+ contactObj2);
+                System.out.println(" contactObj " + contactObj);
+                System.out.println(" contactObj2 " + contactObj2);
             }
 
         } catch (SQLException ex) {
             System.out.println("Selection Failed");
         }
         return contactObj;
+    }
+
+    public boolean deleteContact(int id) {
+        try {
+            pst = connection.prepareStatement("delete from CONTACT where C_ID='" + id + "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rows = pst.executeUpdate();
+            if (rows != 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    
+    public boolean updateContact(Contact contact) {
+        try {
+            pst = connection.prepareStatement("update CONTACT set PHONE='" + contact.getPhone()+ "' where C_ID='" + contact.getId()+ "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rows = pst.executeUpdate();
+            if (rows != 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 //    public void deleteUser(User userObj) {

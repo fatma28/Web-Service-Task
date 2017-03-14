@@ -118,8 +118,36 @@ System.out.println("contactReturn222"+ contactReturn);
 //////////////////////////////////////////////////
     //Ahmed part
     
+     @POST
+    @Path("/deleteContact")
+    public String deleteContact(@FormParam("id") int id) {
+
+        ContactDAO contactDAO = new ContactDAO();
+       
+        boolean check=contactDAO.deleteContact(id);
+if(check)
+        return "contact deleted ! " + "<br/>" + "<br/>";
+           
+else
+    return "error";
+    }
     
-    
+      @POST
+    @Path("/updateContact")
+    public String updateContact(@FormParam("id") int id,@FormParam("phone") int phone) {
+  Contact contactObj = new Contact();
+        contactObj.setId(id);
+                contactObj.setPhone(phone);
+
+        ContactDAO contactDAO = new ContactDAO();
+       
+        boolean check=contactDAO.updateContact(contactObj);
+if(check)
+        return "contact updated ! " + "<br/>" + "<br/>";
+           
+else
+    return "error";
+    }
     
     
     

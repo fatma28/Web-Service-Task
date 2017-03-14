@@ -62,9 +62,40 @@
                     <td colspan="2"><center><input type="submit" value="Get Contact"/></center></td>
                 </tr>
             </table>
-
+         </form>
+  <form action="container/wsContact/deleteContact" method="post">
+            <table>
+                <tr>
+                    <td colspan="2"> delete contact By id</td>
+                   </tr>
+                <tr>
+                    <td>ID</td>
+                    <td><input type="text" name="id" required/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><center><input type="submit" value="delete Contact"/></center></td>
+                </tr>
+            </table>
         </form>
         
+        <form action="container/wsContact/updateContact" method="post">
+            <table>
+                <tr>
+                    <td colspan="2"> update contact By id</td>
+                   </tr>
+                <tr>
+                    <td>ID</td>
+                    <td><input type="text" name="id" required/></td>
+                </tr>
+                 <tr>
+                    <td>New phone</td>
+                    <td><input type="text" name="phone" required/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><center><input type="submit" value="update Contact"/></center></td>
+                </tr>
+            </table>
+        </form>
         
         
         <br/>
