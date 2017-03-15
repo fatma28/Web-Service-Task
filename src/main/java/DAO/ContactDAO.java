@@ -144,25 +144,25 @@ public class ContactDAO extends DBHandler {
 
     public Contact getName(Contact cObj) {
 
-        Contact contactObj = new Contact();
+
 
         System.out.println("cObj**  "+ cObj);
-        String selectQuery = "SELECT mail, phone from Contact where c_id='" + cObj.getUserName() + "' ";
+        String selectQuery = "SELECT mail, phone from Contact where USERNAME='" + cObj.getUserName() + "' ";
         try {
             if (connection != null) {
                 pst = connection.prepareStatement(selectQuery);
                 rs = pst.executeQuery();
                 while (rs.next()) {
-                    contactObj.setMail(rs.getString(1));
-                    contactObj.setPhone(Integer.parseInt(rs.getString(2)));
-                    contactObj.setUserName(contactObj.getUserName());
+                    cObj.setMail(rs.getString(1));
+                    cObj.setPhone(Integer.parseInt(rs.getString(2)));
+                    cObj.setUserName(cObj.getUserName());
 
                 }
             }
         } catch (SQLException ex) {
             System.out.println("Selection Failed");
         }
-        return contactObj;
+        return cObj;
     }
 
 }

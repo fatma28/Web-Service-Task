@@ -9,7 +9,6 @@
 <script src="jquery-1.9.1.min.js"></script>
 <!DOCTYPE html>
 <html>
-
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -78,22 +77,64 @@
 
 
         <br/>
-        <br/>
-        <br/>
 
-        <p>Get All Contacts:</p>
-        <form action="container/wsContact/getAllContact" method="post">
-            <input type="button" value="Get All Contact" id="sendBtnId"/>
-        </form>
+    </form>
+    <form action="container/wsContact/deleteContact" method="post">
+        <table>
+            <tr>
+                <td colspan="2"> delete contact By id</td>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td><input type="text" name="id" required/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><center><input type="submit" value="delete Contact"/></center></td>
+            </tr>
+        </table>
+    </form>
 
-        <c:forEach items="${contactClass.contactList}" var="c">
-            <c:out value="${c.userName}"/>
-            <c:out value="Here"/>
-        </c:forEach>
+    <form action="container/wsContact/updateContact" method="post">
+        <table>
+            <tr>
+                <td colspan="2"> update contact By id</td>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td><input type="text" name="id" required/></td>
+            </tr>
+            <tr>
+                <td>New phone</td>
+                <td><input type="text" name="phone" required/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><center><input type="submit" value="update Contact"/></center></td>
+            </tr>
+        </table>
+    </form>
 
-        <div id="myDiv"></div>
-        <%--<jsp:getProperty name="contactClass" property="userName"/>--%>
-        <script>
+
+    <br/>
+    <br/>
+    <br/>
+
+
+    <br/>
+    <br/>
+
+    <p>Get All Contacts:</p>
+    <form action="container/wsContact/getAllContact" method="post">
+        <input type="button" value="Get All Contact" id="sendBtnId"/>
+    </form>
+
+    <c:forEach items="${contactClass.contactList}" var="c">
+        <c:out value="${c.userName}"/>
+        <c:out value="Here"/>
+    </c:forEach>
+
+    <div id="myDiv"></div>
+    <%--<jsp:getProperty name="contactClass" property="userName"/>--%>
+    <script>
 
 //            $(document).ready(function () {
 //                $("#sendBtnId").click(function () {
@@ -102,27 +143,27 @@
 //                });
 //            });
 
-            function addData() {
-                $.ajax({url: 'container/wsContact/getAllContact',
-                    type: 'POST',
-                    dataType: 'text',
-                    success: function (data) {
+        function addData() {
+            $.ajax({url: 'container/wsContact/getAllContact',
+                type: 'POST',
+                dataType: 'text',
+                success: function (data) {
 
-                        for (var i = 0; i < data.length; i++) {
-                            document.getElementById("myDiv").innerHTML = data[i].userName;
-                        }
-
-
+                    for (var i = 0; i < data.length; i++) {
+                        document.getElementById("myDiv").innerHTML = data[i].userName;
                     }
-                });
+
+
+                }
+            });
 //////////////////////////
 //});
-            }
+        }
 //      }  );
 
 
-            setInterval(addData, 500);
+        setInterval(addData, 500);
 
-        </script>
-    </body>
+    </script>
+</body>
 </html>

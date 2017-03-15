@@ -63,11 +63,11 @@ public class WSContact extends DAO.DBHandler {
         contactObj.setId(id);
 
         ContactDAO contactDAO = new ContactDAO();
-        Contact contactReturn = contactDAO.getID(contactObj);
+         contactObj = contactDAO.getID(contactObj);
 
-        return "Retrieve Spec Contact Done! " + "<br/>" + " UserName: " + contactReturn.getUserName() + "<br/>"
-                + "Mail: " + contactReturn.getMail() + "<br/>"
-                + "Phone Number: " + contactReturn.getPhone();
+        return "Retrieve Spec Contact Done! " + "<br/>" + " UserName: " + contactObj.getUserName() + "<br/>"
+                + "Mail: " + contactObj.getMail() + "<br/>"
+                + "Phone Number: " + contactObj.getPhone();
     }
 
     ///
