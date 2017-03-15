@@ -6,7 +6,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="contactClass" scope="session" class="model.Contact"/>
-       <script src="jquery-1.9.1.min.js"></script>
+<script src="jquery-1.9.1.min.js"></script>
 <!DOCTYPE html>
 <html>
 
@@ -88,19 +88,41 @@
 
         <c:forEach items="${contactClass.contactList}" var="c">
             <c:out value="${c.userName}"/>
-             <c:out value="Here"/>
+            <c:out value="Here"/>
         </c:forEach>
 
+        <div id="myDiv"></div>
         <%--<jsp:getProperty name="contactClass" property="userName"/>--%>
-<!--        <script>
-            $(document).ready(function () {
-                $("#sendBtnId").click(function () {
-            <%--<jsp:getProperty name="contactClass" property="userName"/>--%>
+        <script>
 
+//            $(document).ready(function () {
+//                $("#sendBtnId").click(function () {
+//            <%--<jsp:getProperty name="contactClass" property="userName"/>--%>
+//
+//                });
+//            });
+
+            function addData() {
+                $.ajax({url: 'container/wsContact/getAllContact',
+                    type: 'POST',
+                    dataType: 'text',
+                    success: function (data) {
+
+                        for (var i = 0; i < data.length; i++) {
+                            document.getElementById("myDiv").innerHTML = data[i].userName;
+                        }
+
+
+                    }
                 });
-            });
+//////////////////////////
+//});
+            }
+//      }  );
 
 
-        </script>-->
+            setInterval(addData, 500);
+
+        </script>
     </body>
 </html>
