@@ -24,6 +24,7 @@ public class ContactDAO extends DBHandler {
 
     private PreparedStatement pst;
     private ResultSet rs;
+    int rows;
 
     public ContactDAO() {
         new DBHandler();
@@ -67,23 +68,23 @@ public class ContactDAO extends DBHandler {
         Contact cObj = null;
         String selectQuery = "SELECT username, mail, phone from Contact where c_id='" + contactObj.getId() + "' ";
         try {
-            pst = connection.prepareStatement(selectQuery);
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                String uName = rs.getString(1);
-                String uMail = rs.getString(2);
-                int uPhone = rs.getInt(3);
+            if (connection != null) {
+                pst = connection.prepareStatement(selectQuery);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    String uName = rs.getString(1);
+                    String uMail = rs.getString(2);
+                    int uPhone = rs.getInt(3);
 
-                cObj = new Contact(uName, uMail, uPhone);
+                    cObj = new Contact(uName, uMail, uPhone);
+                }
             }
-
         } catch (SQLException ex) {
             System.out.println("Selection Failed");
         }
         return cObj;
     }
 
-    
     public ArrayList<Contact> getAll() {
 
         ArrayList<Contact> contactVector = new ArrayList();
@@ -99,10 +100,8 @@ public class ContactDAO extends DBHandler {
                 int uPhone = rs.getInt(3);
                 contactElement = new Contact(uName, uMail, uPhone);
                 System.out.println("contactElement" + contactElement.getUserName());
-                
-                contactVector.add(contactElement);
-                
-//                System.out.println(" contactVector " + contactVector);
+//                contactObj.add(contactElement);
+
             }
 
         } catch (SQLException ex) {
@@ -111,23 +110,59 @@ public class ContactDAO extends DBHandler {
         return contactVector;
     }
 
-    public Contact getName(Contact contactObj) {
-        Contact cObj = new Contact();
-        String selectQuery = "SELECT mail, phone from Contact where username='" + contactObj.getUserName() + "' ";
+    public boolean deleteContact(int id) {
         try {
-            pst = connection.prepareStatement(selectQuery);
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                cObj.setMail( rs.getString(1));
-                cObj.setPhone(rs.getInt(2));
-                cObj.setUserName(contactObj.getUserName());
- 
-                System.out.println("******"+ cObj.getMail());
+            pst = connection.prepareStatement("delete from CONTACT where C_ID='" + id + "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rows = pst.executeUpdate();
+            if (rows != 0) {
+                return true;
+            } else {
+                return false;
             }
 
         } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateContact(Contact contact) {
+        try {
+            pst = connection.prepareStatement("update CONTACT set PHONE='" + contact.getPhone() + "' where C_ID='" + contact.getId() + "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rows = pst.executeUpdate();
+            if (rows != 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public Contact getName(Contact cObj) {
+
+        Contact contactObj = new Contact();
+
+        System.out.println("cObj**  "+ cObj);
+        String selectQuery = "SELECT mail, phone from Contact where c_id='" + cObj.getUserName() + "' ";
+        try {
+            if (connection != null) {
+                pst = connection.prepareStatement(selectQuery);
+                rs = pst.executeQuery();
+                while (rs.next()) {
+                    contactObj.setMail(rs.getString(1));
+                    contactObj.setPhone(Integer.parseInt(rs.getString(2)));
+                    contactObj.setUserName(contactObj.getUserName());
+
+                }
+            }
+        } catch (SQLException ex) {
             System.out.println("Selection Failed");
         }
-        return cObj;
+        return contactObj;
     }
+
 }

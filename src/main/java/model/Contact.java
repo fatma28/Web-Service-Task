@@ -18,9 +18,9 @@ public class Contact {
     private int phone;
     private int id;
 
-    ArrayList<Contact> contactList= new ArrayList<>();
+    ArrayList<Contact> contactList = new ArrayList<>();
 
-       public Contact(String uMail, int uPhone) {
+    public Contact(String uMail, int uPhone) {
         this.mail = mail;
         this.phone = phone;
     }
@@ -33,8 +33,7 @@ public class Contact {
     public void setContactList(ArrayList<Contact> contactList) {
         this.contactList = contactList;
     }
-    
- 
+
     public int getId() {
         return id;
     }

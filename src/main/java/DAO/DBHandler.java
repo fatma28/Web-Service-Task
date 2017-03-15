@@ -21,9 +21,12 @@ public class DBHandler {
 
     protected Connection connection;
     protected Statement stm;
-    protected String dbUser = "fatma";
-    protected String dbPass = "fatma28";
+//    protected String dbUser = "mido";
+//    protected String dbPass = "123";
 
+      protected String dbUser = "fatma";
+    protected String dbPass = "fatma28";
+    
     public DBHandler() {
         connect();
     }

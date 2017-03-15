@@ -32,8 +32,8 @@ public class WSContact extends DAO.DBHandler {
     private ResultSet rs;
 
     ArrayList<Contact> contactList = new ArrayList<>();
-     Contact c= new Contact();
-    
+    Contact c = new Contact();
+
     @POST
     @Path("/addContact")
 //    public String add(@QueryParam("userName") String userName, @QueryParam("mail") String mail, @QueryParam("phone") int phone) {
@@ -104,17 +104,47 @@ public class WSContact extends DAO.DBHandler {
 //        for (int i = 0; i < contactList.size(); i++) // return contactList.get(i).getMail();
 //       
 //            System.out.println(contactList.get(i).getUserName());
-               
         c.setContactList(contactList);
- 
-            System.out.println("sdasd************"+c.getContactList());
-        
+
+        System.out.println("sdasd************" + c.getContactList());
+
         Gson gson = new Gson();
         return gson.toJson(contactList);
-       
+
     }
 
 //////////////////////////////////////////////////
     //Ahmed part
+    @POST
+    @Path("/deleteContact")
+    public String deleteContact(@FormParam("id") int id) {
+
+        ContactDAO contactDAO = new ContactDAO();
+
+        boolean check = contactDAO.deleteContact(id);
+        if (check) {
+            return "contact deleted ! " + "<br/>" + "<br/>";
+        } else {
+            return "error";
+        }
+    }
+
+    @POST
+    @Path("/updateContact")
+    public String updateContact(@FormParam("id") int id, @FormParam("phone") int phone) {
+        Contact contactObj = new Contact();
+        contactObj.setId(id);
+        contactObj.setPhone(phone);
+
+        ContactDAO contactDAO = new ContactDAO();
+
+        boolean check = contactDAO.updateContact(contactObj);
+        if (check) {
+            return "contact updated ! " + "<br/>" + "<br/>";
+        } else {
+            return "error";
+        }
+    }
+
     //////////////////
 }
