@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import model.Contact;
 
 /*
@@ -62,7 +63,7 @@ public class ContactDAO extends DBHandler {
         return addFlag;
     }
 
-    public Contact get(Contact contactObj) {
+    public Contact getID(Contact contactObj) {
         Contact cObj = null;
         String selectQuery = "SELECT username, mail, phone from Contact where c_id='" + contactObj.getId() + "' ";
         try {
@@ -82,66 +83,51 @@ public class ContactDAO extends DBHandler {
         return cObj;
     }
 
-    public Vector<Contact> getAll() {
+    
+    public ArrayList<Contact> getAll() {
 
-        Contact contactElement = null;
-        Vector<Contact> contactObj = new Vector();
-        Vector<Contact> contactObj2 = new Vector();
+        ArrayList<Contact> contactVector = new ArrayList();
         String selectQuery = "SELECT username, mail, phone from Contact";
         try {
             pst = connection.prepareStatement(selectQuery);
             rs = pst.executeQuery();
 
             while (rs.next()) {
+                Contact contactElement = new Contact();
                 String uName = rs.getString(1);
                 String uMail = rs.getString(2);
                 int uPhone = rs.getInt(3);
                 contactElement = new Contact(uName, uMail, uPhone);
-                System.out.println("contactElement"+ contactElement.getUserName());
-//                contactObj.add(contactElement);
-                contactObj.add(contactElement);
-                contactObj2.addElement(contactElement);
-
-                System.out.println(" contactObj "+ contactObj);
-                System.out.println(" contactObj2 "+ contactObj2);
+                System.out.println("contactElement" + contactElement.getUserName());
+                
+                contactVector.add(contactElement);
+                
+//                System.out.println(" contactVector " + contactVector);
             }
 
         } catch (SQLException ex) {
             System.out.println("Selection Failed");
         }
-        return contactObj;
+        return contactVector;
     }
 
-//    public void deleteUser(User userObj) {
-//        try {
-//
-//            pst = connection.prepareStatement("DELETE FROM EMP where EMPNO='" + userObj.getId() + "' ");
-//            pst.executeUpdate();
-//            System.out.println("row Deleted Successfully!");
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    public boolean checkExistance(User userObj) {
-//        boolean flag = false;
-//
-//        String selectQuery = "SELECT NAME, PASSWORD FROM CUSTOMER WHERE NAME=? AND PASSWORD=? ";
-//        try {
-//            pst = connection.prepareStatement(selectQuery);
-//            pst.setString(1, userObj.getName());
-//            pst.setString(2, userObj.getPassword());
-//
-//            rs = pst.executeQuery();
-//            while (rs.next()) {
-//                flag = true;
-//                System.out.println("name " + rs.getString(1) + "pass: " + (rs.getString(2)));
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println("Connection Started");
-//        }
-//
-//        return flag;
-//    }
+    public Contact getName(Contact contactObj) {
+        Contact cObj = new Contact();
+        String selectQuery = "SELECT mail, phone from Contact where username='" + contactObj.getUserName() + "' ";
+        try {
+            pst = connection.prepareStatement(selectQuery);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                cObj.setMail( rs.getString(1));
+                cObj.setPhone(rs.getInt(2));
+                cObj.setUserName(contactObj.getUserName());
+ 
+                System.out.println("******"+ cObj.getMail());
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Selection Failed");
+        }
+        return cObj;
+    }
 }

@@ -6,6 +6,7 @@
 package com.mycompany.ws.contact;
 
 import DAO.ContactDAO;
+import com.google.gson.Gson;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import model.Contact;
 
@@ -29,6 +31,8 @@ public class WSContact extends DAO.DBHandler {
     private PreparedStatement pst;
     private ResultSet rs;
 
+    ArrayList<Contact> contactList = new ArrayList<>();
+     Contact c= new Contact();
     
     @POST
     @Path("/addContact")
@@ -49,11 +53,8 @@ public class WSContact extends DAO.DBHandler {
                 + " Phone: " + contactObj.getPhone();
     }
 
-    
     //////////////////
-   
     //fatma's part
-    
     @POST
     @Path("/getSpecContact")
     public String search(@FormParam("id") int id) {
@@ -62,73 +63,58 @@ public class WSContact extends DAO.DBHandler {
         contactObj.setId(id);
 
         ContactDAO contactDAO = new ContactDAO();
-        Contact contactReturn = contactDAO.get(contactObj);
+        Contact contactReturn = contactDAO.getID(contactObj);
+
+        return "Retrieve Spec Contact Done! " + "<br/>" + " UserName: " + contactReturn.getUserName() + "<br/>"
+                + "Mail: " + contactReturn.getMail() + "<br/>"
+                + "Phone Number: " + contactReturn.getPhone();
+    }
+
+    ///
+    @POST
+    @Path("/getContactByName")
+    public String searchByName(@FormParam("name") String name) {
+
+        Contact contactObj = new Contact();
+        contactObj.setUserName(name);
+
+        System.out.println("name******" + name);
+
+        ContactDAO contactDAO = new ContactDAO();
+        Contact contactReturn = contactDAO.getName(contactObj);
+
+        System.out.println("contactReturn" + contactReturn.getUserName());
 
         return "Retrieve Spec Contact Done! " + "<br/>" + " UserName: " + contactReturn.getUserName() + "<br/>"
                 + "Mail: " + contactReturn.getMail() + "<br/>"
                 + "Phone Number: " + contactReturn.getPhone();
     }
     ///
-      @POST
-    @Path("/getContactByName")
-    public Contact searchByName(@FormParam("name") String name) {
-
-        Contact contactObj = new Contact();
-        contactObj.setUserName(name);
-
-        ContactDAO contactDAO = new ContactDAO();
-        Contact contactReturn = contactDAO.get(contactObj);
-
-          System.out.println("contactReturn"+ contactReturn);
-//        return "Retrieve Spec Contact Done! " + "<br/>" + " UserName: " + contactReturn.getUserName() + "<br/>"
-//                + "Mail: " + contactReturn.getMail() + "<br/>"
-//                + "Phone Number: " + contactReturn.getPhone();
-return contactReturn;
-    }
-    ///
 
     @POST
     @Path("/getAllContact")
-    public  List<Contact> getAllContact() {
-//        List result = null;
-//        Contact obj = new Contact();
+    @Produces("application/json")
+    public String getAllContact() {
+        String uName = " ";
         ContactDAO contactDAO = new ContactDAO();
-        List<Contact> contactReturn = contactDAO.getAll();
+        contactList = contactDAO.getAll();
 
-//        for (Contact c : contactReturn) {
-////            result.add(c.getUserName());
-////            result.add(c.getMail());
-////            result.add(c.getPhone());
-//            System.out.println(c.getMail() + "\n");
-//        }
-System.out.println("contactReturn222"+ contactReturn);
-
-//        return "Retrieve All Contact Done! " + "<br/>" + " UserName: " + contactReturn.getUserName() + "<br/>"
-//                + "Mail: " + contactReturn.getMail() + "<br/>"
-//                + "Phone Number: " + contactReturn.getPhone();
-//result+ "..."+  contactReturn.iterator().next().getMail();
-
-        return contactReturn;
+//        System.out.println("contactReturn222" + contactList.get(0).getMail());
+//
+//        for (int i = 0; i < contactList.size(); i++) // return contactList.get(i).getMail();
+//       
+//            System.out.println(contactList.get(i).getUserName());
+               
+        c.setContactList(contactList);
+ 
+            System.out.println("sdasd************"+c.getContactList());
+        
+        Gson gson = new Gson();
+        return gson.toJson(contactList);
+       
     }
-
-    
-   
-    
 
 //////////////////////////////////////////////////
     //Ahmed part
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //////////////////
-    
 }
