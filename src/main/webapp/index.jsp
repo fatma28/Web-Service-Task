@@ -9,6 +9,7 @@
         <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
 
         <link rel="stylesheet" href="css/style.css">
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
     </head>
@@ -156,10 +157,10 @@
 
                         <div class="logmod__tab lgm-5">
                             <div class="logmod__heading">
-                                <span class="logmod__heading-subtitle">Search By Contact ID.</span>
+                                <span class="logmod__heading-subtitle">Search By Contact name.</span>
                             </div>
                             <div class="logmod__form">
-                                <form accept-charset="utf-8"  action="container/wsContact/getSpecContact" method="post" class="simform">
+                                <form accept-charset="utf-8"  action="container/wsContact/getContactByName" method="post" class="simform">
                                     <div class="sminputs">
                                         <div class="input full">
                                             <label class="string optional" for="user-name">Name*</label>
@@ -182,14 +183,43 @@
                      <div class="logmod__tab lgm-6">
                             <div class="logmod__heading">
                                 <span class="logmod__heading-subtitle">View Contacts.</span>
-                            </div>
-                            <div class="logmod__form">
-                                <form accept-charset="utf-8"  action="container/wsContact/getAllContact" method="post" class="simform">
+                                <center>
+                                <table class="table table-striped"  >
+                    <thead>
+                         <tr>
 
+                        <td bgcolor="#4b8df9">
+                            id
+                        </td>
+                        <td bgcolor="#4b8df9">
+                            name
+
+                        </td>
+                          <td bgcolor="#4b8df9">
+                            mail
+
+                        </td>
+                          <td bgcolor="#4b8df9">
+                            phone
+
+                        </td>
+
+                    </tr>
+                    </thead>
+                    <TBODY  id="tab">
+                         
+                    </TBODY>
+                   
+                </table>
+                                </center>
+                            </div>
+                         <div class="simform__actions">
+                                  
+
+                         </div>                          
 
                                     <div class="simform__actions">
-                                        <input class="sumbit" type="submit" value="Get Contact"/>
-                                    </div> 
+ <input type="button" class="sumbit" value="get All contacts"  onclick="send()" accept-charset="utf-8" >                                    </div> 
                                 </form>
                             </div> 
 
@@ -205,6 +235,39 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
     <script src="js/index.js"></script>
+    <script>
+        function send(){
+         $.ajax({url: 'container/wsContact/getAllContact', //servlet url
+                    type: 'GET', //servlet request type
+
+                    dataType: 'json', // Type For output type
+                    success: function (data) {
+                        console.log(data);
+                        table.innerHTML = '';
+                        for (i = 0; i < data.length; i++) {
+                            var row = table.insertRow(-1);
+                            var cell0 = row.insertCell(0);
+
+                            var cell1 = row.insertCell(1);
+                            var cell2 = row.insertCell(2);
+
+                            var cell3 = row.insertCell(3);
+
+                            cell0.innerHTML = data[i].id;
+                            cell1.innerHTML = data[i].userName;
+                            cell2.innerHTML = data[i].mail;
+
+                            cell3.innerHTML = data[i].phone;
+
+                        }
+                        // name = data.uname;
+                        //message = data.msg;
+                    }
+                });
+                                var table = document.getElementById("tab");
+
+            }
+    </script>
 
 </body>
 </html>

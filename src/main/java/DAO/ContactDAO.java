@@ -86,10 +86,10 @@ public class ContactDAO extends DBHandler {
     public ArrayList<Contact> getAll() {
 
         ArrayList<Contact> contactVector = new ArrayList();
-        String selectQuery = "SELECT username, mail, phone, id from Contact";
+        String selectQuery = "SELECT username, mail, phone, c_id from Contact";
         try {
             if (connection != null) {
-                pst = connection.prepareStatement(selectQuery);
+                pst = connection.prepareStatement(selectQuery,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 rs = pst.executeQuery();
 
                 while (rs.next()) {
@@ -149,7 +149,7 @@ public class ContactDAO extends DBHandler {
     public Contact getName(Contact cObj) {
 
         System.out.println("cObj**  " + cObj);
-        String selectQuery = "SELECT mail, phone from Contact where USERNAME='" + cObj.getUserName() + "' ";
+        String selectQuery = "SELECT mail, phone from Contact where USERNAME like '" + cObj.getUserName() + "' ";
         try {
             if (connection != null) {
                 pst = connection.prepareStatement(selectQuery);
