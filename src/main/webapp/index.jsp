@@ -163,7 +163,7 @@
                                     <div class="sminputs">
                                         <div class="input full">
                                             <label class="string optional" for="user-name">Name*</label>
-                                            <input class="string optional" type="text" name="name" required
+                                            <input class="string optional" type="text" name="name" required/>
                                         </div>
                                     </div>
 
@@ -176,6 +176,28 @@
                         </div>
 
                     </div>
+                    
+                    <!--View--> 
+                    
+                     <div class="logmod__tab lgm-6">
+                            <div class="logmod__heading">
+                                <span class="logmod__heading-subtitle">View Contacts.</span>
+                            </div>
+                            <div class="logmod__form">
+                                <form accept-charset="utf-8"  action="container/wsContact/getAllContact" method="post" class="simform">
+
+
+                                    <div class="simform__actions">
+                                        <input class="sumbit" type="submit" value="Get Contact"/>
+                                    </div> 
+                                </form>
+                            </div> 
+
+                        </div>
+
+                    </div>
+                    <!-- -->
+                    
                 </div>
             </div>
         </div>
