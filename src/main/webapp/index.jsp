@@ -1,169 +1,188 @@
-<%-- 
-    Document   : index
-    Created on : Mar 15, 2017, 5:33:53 AM
-    Author     : fatma
---%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="contactClass" scope="session" class="model.Contact"/>
-<script src="jquery-1.9.1.min.js"></script>
 <!DOCTYPE html>
-<html>
+<html >
     <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <title>RS-WebService(CRUD Operations)</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+        <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+        <link rel="stylesheet" href="css/style.css">
+
+
     </head>
+
     <body>
-        <h1>Hello Web service Restful !</h1>
+        <div class="logmod">
+            <div class="logmod__wrapper">
+                <!--                <span class="logmod__close">Close</span>-->
+                <div class="logmod__container">
+                    <ul class="logmod__tabs">
 
-        <form action="container/wsContact/addContact" method="post">
-            <table>
-                <tr>
-                    <td> User Name:</td>
-                    <td> <input type="text" name="userName" required/></td>
-                </tr>
-                <tr>
-                    <td>E-Mail</td>
-                    <td> <input type="email" name="mail"/></td>
-                </tr>
-                <tr>
-                    <td>Phone Number</td>
-                    <td><input type="number" name="phone"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Add To Database"/></td>
-                </tr>
-            </table>
-        </form>
-        <br/>
-        <br/>
-        <br/>
-        <form action="container/wsContact/getSpecContact" method="post">
-            <table>
-                <tr>
-                    <td colspan="2"> Get Specific Contact Object</td>
-                </tr>
-                <tr>
-                    <td>ID</td>
-                    <td><input type="number" name="id" required/></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><center><input type="submit" value="Get Contact"/></center></td>
-                </tr>
-            </table>
+                        <li data-tabtar="lgm-1"><a href="#">Add to Contact</a></li>
+                        <li data-tabtar="lgm-2"><a href="#">Update</a></li>
 
-        </form>
+                        <li data-tabtar="lgm-3"><a href="#">Delete</a></li>
+                        <li data-tabtar="lgm-4"><a href="#">Search By ID</a></li>
 
-        <br/>
-        <br/>
-        <br/>
-
-        <form action="container/wsContact/getContactByName" method="post">
-            <table>
-                <tr>
-                    <td colspan="2"> Get Specific Contact Object By Name</td>
-                </tr>
-                <tr>
-                    <td>Name</td>
-                    <td><input type="text" name="name" required/></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><center><input type="submit" value="Get Contact"/></center></td>
-                </tr>
-            </table>
-
-        </form>
+                        <li data-tabtar="lgm-5"><a href="#">Search By Name</a></li>
+                        <li data-tabtar="lgm-6"><a href="#">view</a></li>
 
 
-
-        <br/>
-
-    </form>
-    <form action="container/wsContact/deleteContact" method="post">
-        <table>
-            <tr>
-                <td colspan="2"> delete contact By id</td>
-            </tr>
-            <tr>
-                <td>ID</td>
-                <td><input type="text" name="id" required/></td>
-            </tr>
-            <tr>
-                <td colspan="2"><center><input type="submit" value="delete Contact"/></center></td>
-            </tr>
-        </table>
-    </form>
-
-    <form action="container/wsContact/updateContact" method="post">
-        <table>
-            <tr>
-                <td colspan="2"> update contact By id</td>
-            </tr>
-            <tr>
-                <td>ID</td>
-                <td><input type="text" name="id" required/></td>
-            </tr>
-            <tr>
-                <td>New phone</td>
-                <td><input type="text" name="phone" required/></td>
-            </tr>
-            <tr>
-                <td colspan="2"><center><input type="submit" value="update Contact"/></center></td>
-            </tr>
-        </table>
-    </form>
+                    </ul>
+                    <div class="logmod__tab-wrapper">
 
 
-    <br/>
-    <br/>
-    <br/>
+                        <!--Add Contact-->
+
+                        <div class="logmod__tab lgm-1">
+<!--                            <div class="logmod__heading">
+                                <span class="logmod__heading-subtitle">Add New Contact Info.</span>
+                            </div>-->
+                            <div class="logmod__form">
+                                <form accept-charset="utf-8" action="container/wsContact/addContact" method="post" class="simform">
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <label class="string optional" for="user-name">User Name*</label>
+                                            <input class="string optional" type="text" name="userName" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <label class="string optional" for="user-name">E-Mail*</label>
+                                            <input class="string optional" type="email" name="mail" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="sminputs">
+                                        <div class="input string optional">
+                                            <label class="string optional" for="user-pw">New Phone*</label>
+                                            <input class="string optional"  type="number" name="phone" required/>
+                                        </div>
+
+                                    </div>
+                                    <div class="simform__actions">
+                                        <input class="sumbit" type="submit" value="Add To Database"/>
+                                    </div> 
+                                </form>
+                            </div> 
+
+                        </div>
+
+                        <!--Update Tab-->
+
+                        <div class="logmod__tab lgm-2">
+                            <div class="logmod__heading">
+                                <span class="logmod__heading-subtitle">Update Contact Info.</span>
+                            </div>
+                            <div class="logmod__form">
+                                <form accept-charset="utf-8" action="container/wsContact/updateContact" method="post" class="simform">
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <label class="string optional" for="user-name">ID*</label>
+                                            <input class="string optional" type="text" name="id" required/>
+                                        </div>
+                                    </div>
+                                    <div class="sminputs">
+                                        <div class="input string optional">
+                                            <label class="string optional" for="user-pw">New Phone*</label>
+                                            <input class="string optional"  type="text" name="phone" required/>
+                                        </div>
+
+                                    </div>
+                                    <div class="simform__actions">
+                                        <input class="sumbit" type="submit" value="Update Contact"/>
+                                    </div> 
+                                </form>
+                            </div> 
+
+                        </div>
 
 
-    <br/>
-    <br/>
-
-    <p>Get All Contacts:</p>
-    <form action="container/wsContact/getAllContact" method="post">
-        <input type="button" value="Get All Contact" id="sendBtnId"/>
-    </form>
-
-    <c:forEach items="${contactClass.contactList}" var="c">
-        <c:out value="${c.userName}"/>
-        <c:out value="Here"/>
-    </c:forEach>
-
-    <div id="myDiv"></div>
-    <%--<jsp:getProperty name="contactClass" property="userName"/>--%>
-    <script>
-
-//            $(document).ready(function () {
-//                $("#sendBtnId").click(function () {
-//            <%--<jsp:getProperty name="contactClass" property="userName"/>--%>
-//
-//                });
-//            });
-
-        function addData() {
-            $.ajax({url: 'container/wsContact/getAllContact',
-                type: 'POST',
-                dataType: 'text',
-                success: function (data) {
-
-                    for (var i = 0; i < data.length; i++) {
-                        document.getElementById("myDiv").innerHTML = data[i].userName;
-                    }
+                        <!--          Delete Tab   -->    
 
 
-                }
-            });
-//////////////////////////
-//});
-        }
-//      }  );
+                        <div class="logmod__tab lgm-3">
+                            <div class="logmod__heading">
+                                <span class="logmod__heading-subtitle">Delete Contact Info.</span>
+                            </div>
+                            <div class="logmod__form">
+                                <form accept-charset="utf-8" action="container/wsContact/deleteContact" method="post" class="simform">
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <label class="string optional" for="user-name">ID*</label>
+                                            <input class="string optional" type="text" name="id" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="simform__actions">
+                                        <input class="sumbit" type="submit" value="delete Contact"/>
+                                    </div> 
+                                </form>
+                            </div> 
+
+                        </div>
+
+                        <!--Search By Id-->
 
 
-        setInterval(addData, 500);
 
-    </script>
+                        <div class="logmod__tab lgm-4">
+                            <div class="logmod__heading">
+                                <span class="logmod__heading-subtitle">Search By Contact ID.</span>
+                            </div>
+                            <div class="logmod__form">
+                                <form accept-charset="utf-8"  action="container/wsContact/getSpecContact" method="post" class="simform">
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <label class="string optional" for="user-name">ID*</label>
+                                            <input class="string optional" type="number" name="id" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="simform__actions">
+                                        <input class="sumbit" type="submit" value="Get Contact"/>
+                                    </div> 
+                                </form>
+                            </div> 
+
+                        </div>
+
+
+                        <!--Search By Name-->
+
+
+                        <div class="logmod__tab lgm-5">
+                            <div class="logmod__heading">
+                                <span class="logmod__heading-subtitle">Search By Contact ID.</span>
+                            </div>
+                            <div class="logmod__form">
+                                <form accept-charset="utf-8"  action="container/wsContact/getSpecContact" method="post" class="simform">
+                                    <div class="sminputs">
+                                        <div class="input full">
+                                            <label class="string optional" for="user-name">Name*</label>
+                                            <input class="string optional" type="text" name="name" required
+                                        </div>
+                                    </div>
+
+                                    <div class="simform__actions">
+                                        <input class="sumbit" type="submit" value="Get Contact"/>
+                                    </div> 
+                                </form>
+                            </div> 
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+
 </body>
 </html>

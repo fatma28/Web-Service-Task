@@ -19,12 +19,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import model.Contact;
 
-/**
- *
- * @author fatma
- */
 @Path("/wsContact")
 public class WSContact extends DAO.DBHandler {
 
@@ -63,11 +60,11 @@ public class WSContact extends DAO.DBHandler {
         contactObj.setId(id);
 
         ContactDAO contactDAO = new ContactDAO();
-         contactObj = contactDAO.getID(contactObj);
+       Contact contactObj2 = contactDAO.getID(contactObj);
 
-        return "Retrieve Spec Contact Done! " + "<br/>" + " UserName: " + contactObj.getUserName() + "<br/>"
-                + "Mail: " + contactObj.getMail() + "<br/>"
-                + "Phone Number: " + contactObj.getPhone();
+        return "Retrieve Spec Contact Done! " + "<br/>" + " UserName: " + contactObj2.getUserName() + "<br/>"
+                + "Mail: " + contactObj2.getMail() + "<br/>"
+                + "Phone Number: " + contactObj2.getPhone();
     }
 
     ///
@@ -91,24 +88,21 @@ public class WSContact extends DAO.DBHandler {
     }
     ///
 
-    @POST
+    @GET
     @Path("/getAllContact")
     @Produces("application/json")
+//    @Produces({ MediaType.APPLICATION_JSON})
     public String getAllContact() {
         String uName = " ";
         ContactDAO contactDAO = new ContactDAO();
         contactList = contactDAO.getAll();
 
-//        System.out.println("contactReturn222" + contactList.get(0).getMail());
-//
-//        for (int i = 0; i < contactList.size(); i++) // return contactList.get(i).getMail();
-//       
-//            System.out.println(contactList.get(i).getUserName());
         c.setContactList(contactList);
 
         System.out.println("sdasd************" + c.getContactList());
 
         Gson gson = new Gson();
+        System.out.println("gson.toJson(contactList); "+ gson.toJson(contactList));
         return gson.toJson(contactList);
 
     }

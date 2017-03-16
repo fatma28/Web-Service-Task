@@ -13,10 +13,7 @@ import oracle.jdbc.OracleDriver;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- *
- * @author fatma
- */
+
 public class DBHandler {
 
     protected Connection connection;
